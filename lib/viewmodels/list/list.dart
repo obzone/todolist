@@ -59,7 +59,7 @@ class TodoListViewModel extends BaseViewModel {
               element.doHistories != null &&
               element.doHistories.length > 0 &&
               element.doHistories.last.endTime == null &&
-              (element.doHistories.last.startTime.millisecondsSinceEpoch + 1 * 60 * 1000 < DateTime.now().millisecondsSinceEpoch))
+              (element.doHistories.last.startTime.millisecondsSinceEpoch + 25 * 60 * 1000 < DateTime.now().millisecondsSinceEpoch))
           .forEach((element) {
         element.doHistories.last.endTime = DateTime.now();
       });
@@ -158,12 +158,9 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       model.isDone = done;
-      this.todayList.sort((model1, model2) {
-        return model1.isDone == true ? 1 : -1;
-      });
-      this.todoPool.sort((model1, model2) {
-        return model1.isDone == true ? 1 : -1;
-      });
+      if (model.doHistories != null && model.doHistories.length > 0 && model.doHistories.last.endTime == null) {
+        model.doHistories.last.endTime = DateTime.now();
+      }
       this.save();
     } catch (e) {
       this.e = e;

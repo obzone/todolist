@@ -8,37 +8,42 @@ class OpearateSelectorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: values?.map((value) {
-            return Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.blueGrey[50],
-                    width: 1,
-                  ),
-                ),
-                color: Colors.white,
+    return Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+      ...?values?.map((value) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.blueGrey[50],
+                width: 1,
               ),
-              height: 45,
-              child: MaterialButton(
-                padding: EdgeInsets.zero,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                onPressed: () async {
-                  await Navigator.maybePop(context);
-                  onValueChange(value);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(value ?? '', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-            );
-          })?.toList() ??
-          [],
-    );
+            ),
+            color: Colors.white,
+          ),
+          height: 45,
+          child: MaterialButton(
+            padding: EdgeInsets.zero,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onPressed: () async {
+              await Navigator.maybePop(context);
+              onValueChange(value);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(value ?? '', style: TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+        );
+      }),
+      Container(
+        color: Colors.white,
+        child: SafeArea(
+          // bottom: true,
+          child: Container(),
+        ),
+      ),
+    ]);
   }
 }

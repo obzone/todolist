@@ -57,7 +57,7 @@ class _TodayListView extends State<TodayListView> {
                 );
               },
         child: Container(
-          margin: EdgeInsets.all(5),
+          margin: EdgeInsets.all(8),
           child: Column(
             children: <Widget>[
               Row(
@@ -88,23 +88,21 @@ class _TodayListView extends State<TodayListView> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(left: 5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            ...(model.doHistories ?? []).map(
-                              (history) => Icon(
-                                Icons.clear,
-                                color: Theme.of(context).primaryColor,
-                                size: 15,
+                            ...?model.doHistories?.map(
+                              (history) => Text(
+                                '✗ ',
+                                style: TextStyle(color: Colors.blue),
                               ),
                             ),
                           ],
                         ),
+                        if (model.doHistories != null && model.doHistories.length > 0) Container(height: 5),
                         Container(
-                          margin: EdgeInsets.only(top: 5),
                           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           color: Theme.of(context).primaryColor,
                           child: Text(
