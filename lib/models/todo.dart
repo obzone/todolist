@@ -7,7 +7,7 @@ class DoHistoryModel {
   DateTime startTime;
   DateTime endTime;
 
-  int totalTime = 10;
+  int totalTime;
 
   DoHistoryModel({this.startTime, this.endTime, this.totalTime});
 

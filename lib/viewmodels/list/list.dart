@@ -85,7 +85,7 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
-      DoHistoryModel doHistoryModel = DoHistoryModel(startTime: DateTime.now(), totalTime: 10);
+      DoHistoryModel doHistoryModel = DoHistoryModel(startTime: DateTime.now(), totalTime: 60 * 25);
       if (model.doHistories == null) {
         model.doHistories = [doHistoryModel];
       } else {

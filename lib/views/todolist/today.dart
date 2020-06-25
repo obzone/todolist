@@ -116,7 +116,7 @@ class _TodayListView extends State<TodayListView> {
                   if (model.isDone != true)
                     TimmerControllerView(
                       model: model,
-                      seconds: 10,
+                      seconds: 60 * 25,
                       onChangeTimePress: () {},
                       onStartPress: () {
                         widget.viewModel.startToding(model);
