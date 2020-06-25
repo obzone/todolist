@@ -1,19 +1,19 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todolist/services/local_notification.dart';
 import 'package:todolist/viewmodels/base.dart';
 import 'package:todolist/viewmodels/list/list.dart';
 
 class LaunchLoadingViewModel extends BaseViewModel {
   bool needShowGuideView = false;
 
-  /// 先检查token
-  /// 如果有token，拉取用户资源
   Future checkState() async {
     try {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
       await this._checkIsNeedShowGuideView();
-      await TodoListViewModel.getInstance().loadTodoPool();
+      await LocalNotificationService.getInstance().initialize();
+      await TodoListViewModel.getInstance().loadTodosFromLocal();
     } catch (e) {
       this.e = e;
     } finally {

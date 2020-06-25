@@ -6,10 +6,16 @@ class TimmerControllerView extends StatefulWidget {
   final int seconds;
   final Function() onChangeTimePress;
   final Function() onStartPress;
-  final Function() onCancelPress;
-  final Function() onTimeout;
+  final Function() onComplete;
 
-  TimmerControllerView({Key key, @required this.model, @required this.seconds, this.onChangeTimePress, this.onStartPress, this.onCancelPress, this.onTimeout}) : super(key: key);
+  TimmerControllerView({
+    Key key,
+    @required this.model,
+    @required this.seconds,
+    this.onChangeTimePress,
+    this.onStartPress,
+    this.onComplete,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,15 +38,13 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
       if (status == AnimationStatus.completed) {
         setState(() {
           _animationController.reset();
-          widget.onTimeout();
+          widget.onComplete();
         });
-      } else if (status == AnimationStatus.dismissed) {
-        widget.onCancelPress();
       }
     });
 
-    if (widget.model.doHistories != null && widget.model.doHistories.length > 0 && widget.model.doHistories.last.endTime == null) {
-      _animationController.value = 1 - (widget.model.doHistories.last.surplusSeconds / widget.seconds);
+    if (widget.model.doing != null && widget.model.doing?.endTime == null) {
+      _animationController.value = 1 - (widget.model.doing.surplusSeconds / widget.seconds);
       _animationController.forward();
     }
   }
@@ -73,7 +77,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
               if (_animationController.status == AnimationStatus.forward) {
                 _animationController.reset();
                 _animationController.value = widget.seconds.toDouble();
-                widget.onCancelPress();
+                widget.onComplete();
               } else {
                 _animationController.forward();
                 widget.onStartPress();

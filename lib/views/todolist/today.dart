@@ -114,24 +114,17 @@ class _TodayListView extends State<TodayListView> {
                     ),
                   ),
                   if (model.isDone != true)
-                    Builder(
-                      builder: (context) {
-                        return TimmerControllerView(
-                          model: model,
-                          seconds: 60 * 25,
-                          onChangeTimePress: () {},
-                          onStartPress: () {
-                            widget.viewModel.startToding(model);
-                          },
-                          onCancelPress: () {
-                            widget.viewModel.cancelDoing(model);
-                          },
-                          onTimeout: () {
-                            widget.viewModel.finishDoing(model);
-                          },
-                        );
+                    TimmerControllerView(
+                      model: model,
+                      seconds: 10,
+                      onChangeTimePress: () {},
+                      onStartPress: () {
+                        widget.viewModel.startToding(model);
                       },
-                    ),
+                      onComplete: () {
+                        widget.viewModel.finishDoing(model);
+                      },
+                    )
                 ],
               )
             ],
