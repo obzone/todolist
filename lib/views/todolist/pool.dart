@@ -57,11 +57,16 @@ class _TodoPoolView extends State<TodoPoolView> {
     );
   }
 
-  _onModelCheckboxPress(TodoModel model) {
+  _onModelCheckboxPress(BuildContext context, TodoModel model) {
     if (widget.viewModel.todayList.any((element) => element.id == model.id)) {
       widget.viewModel.removeTodayTodo(model);
     } else {
       widget.viewModel.addTodayTodo(model);
+      Scaffold.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 1),
+        content: Text('added to today list'),
+      ));
     }
   }
 
@@ -108,18 +113,22 @@ class _TodoPoolView extends State<TodoPoolView> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  MaterialButton(
-                    child: Icon(model.isDone == true ? Icons.radio_button_checked : isInToday ? Icons.check_box : Icons.check_box_outline_blank),
-                    onPressed: () {
-                      if (model.isDone == true) {
-                        widget.viewModel.done(model: model, done: false);
-                      } else {
-                        this._onModelCheckboxPress(model);
-                      }
+                  Builder(
+                    builder: (context) {
+                      return MaterialButton(
+                        child: Icon(model.isDone == true ? Icons.radio_button_checked : isInToday ? Icons.check_box : Icons.check_box_outline_blank),
+                        onPressed: () {
+                          if (model.isDone == true) {
+                            widget.viewModel.done(model: model, done: false);
+                          } else {
+                            this._onModelCheckboxPress(context, model);
+                          }
+                        },
+                        padding: EdgeInsets.zero,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        minWidth: 40,
+                      );
                     },
-                    padding: EdgeInsets.zero,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    minWidth: 40,
                   ),
                   Container(
                     child: Flexible(

@@ -98,10 +98,11 @@ class _TodayListView extends State<TodayListView> {
                                 '✗ ',
                                 style: TextStyle(color: Colors.blue),
                               ),
-                            )
+                            ),
+                            Text(' '),
                           ],
                         ),
-                        if (model.doHistories != null && model.doHistories.length > 0) Container(height: 5),
+                        Container(height: 5),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           color: Theme.of(context).primaryColor,
