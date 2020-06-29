@@ -126,7 +126,7 @@ class _TodoPoolView extends State<TodoPoolView> {
                       child: Text(
                         model.name ?? '',
                         maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18),
                       ),
                     ),
                   ),

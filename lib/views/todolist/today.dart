@@ -76,7 +76,7 @@ class _TodayListView extends State<TodayListView> {
                       child: Text(
                         model.name ?? '',
                         maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18),
                       ),
                     ),
                   ),
@@ -98,7 +98,7 @@ class _TodayListView extends State<TodayListView> {
                                 '✗ ',
                                 style: TextStyle(color: Colors.blue),
                               ),
-                            ),
+                            )
                           ],
                         ),
                         if (model.doHistories != null && model.doHistories.length > 0) Container(height: 5),
@@ -116,10 +116,8 @@ class _TodayListView extends State<TodayListView> {
                   if (model.isDone != true)
                     TimmerControllerView(
                       model: model,
-                      seconds: 60 * 25,
-                      onChangeTimePress: () {},
-                      onStartPress: () {
-                        widget.viewModel.startToding(model);
+                      onStartPress: (duration) {
+                        widget.viewModel.startToding(model: model, duration: duration);
                       },
                       onComplete: () {
                         widget.viewModel.finishDoing(model);

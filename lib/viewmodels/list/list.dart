@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/models/todo.dart';
 import 'package:todolist/services/local_notification.dart';
 import 'package:todolist/viewmodels/base.dart';
+import 'package:wakelock/wakelock.dart';
 
 class TodoListViewModel extends BaseViewModel {
   static TodoListViewModel _viewModel;
@@ -80,17 +81,18 @@ class TodoListViewModel extends BaseViewModel {
     return prefs.setString(this.todoPoolKey, todoPoolJsonString);
   }
 
-  Future startToding(TodoModel model) async {
+  Future startToding({TodoModel model, int duration}) async {
     try {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
-      DoHistoryModel doHistoryModel = DoHistoryModel(startTime: DateTime.now(), totalTime: 60 * 25);
+      DoHistoryModel doHistoryModel = DoHistoryModel(startTime: DateTime.now(), totalTime: duration ?? 60 * 25);
       if (model.doHistories == null) {
         model.doHistories = [doHistoryModel];
       } else {
         model.doHistories.add(doHistoryModel);
       }
+      Wakelock.enable();
       model.updatedTime = DateTime.now();
       LocalNotificationService.getInstance().scheduling(firedTime: DateTime.now().add(Duration(milliseconds: doHistoryModel.totalTime * 1000)), title: model.name, body: 'finished tomato task');
       this._saveTodoPool();
@@ -107,14 +109,15 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
-      print(model.doing.startTime.millisecondsSinceEpoch + model.doing.totalTime * 100);
-      print(DateTime.now().millisecondsSinceEpoch);
       if (model.doing != null && model.doing.startTime != null && (model.doing.startTime.millisecondsSinceEpoch + (model.doing.totalTime - 1) * 1000) < DateTime.now().millisecondsSinceEpoch) {
+        // TODO 如果大于25分钟，小于预定时间也算一次
         model.doHistories.last.endTime = DateTime.now();
       } else {
         model.doHistories.removeLast();
         LocalNotificationService.getInstance().cancelAll();
       }
+      Wakelock.disable();
+      model.updatedTime = DateTime.now();
       this._saveTodoPool();
     } catch (e) {
       this.e = e;
@@ -149,6 +152,7 @@ class TodoListViewModel extends BaseViewModel {
         model.doHistories.last.endTime = DateTime.now();
       }
       LocalNotificationService.getInstance().cancelAll();
+      model.updatedTime = DateTime.now();
       this.save();
     } catch (e) {
       this.e = e;
