@@ -55,7 +55,7 @@ class _TimeSelectorViewState extends State<TimeSelectorView> {
               IconButton(
                 icon: Icon(Icons.done),
                 onPressed: () {
-                  widget.onSelectedItemChanged(this.selectedItem);
+                  widget.onSelectedItemChanged(this.selectedItem ?? widget.selectedItem);
                   Navigator.maybePop(context);
                 },
               )
