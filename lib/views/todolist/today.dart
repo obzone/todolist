@@ -120,8 +120,8 @@ class _TodayListView extends State<TodayListView> {
                       onStartPress: (duration) {
                         widget.viewModel.startToding(model: model, duration: duration);
                       },
-                      onComplete: () {
-                        widget.viewModel.finishDoing(model);
+                      onComplete: ({bool isDone}) {
+                        widget.viewModel.finishDoing(model: model, isDone: isDone);
                       },
                     )
                 ],

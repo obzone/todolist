@@ -11,9 +11,10 @@ class HomePageView extends StatefulWidget {
   }
 }
 
-class _HomePageView extends State<HomePageView> with SingleTickerProviderStateMixin {
+class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
   TabController _tabController; //需要定义一个Controller
   List tabs = ["today list", "todo pool"];
+  AnimationController _animationController;
 
   @override
   void initState() {
@@ -34,11 +35,15 @@ class _HomePageView extends State<HomePageView> with SingleTickerProviderStateMi
           unselectedLabelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
           indicatorColor: Colors.transparent,
           controller: _tabController,
-          tabs: tabs.map((tabTitle) => Tab(text: tabTitle)).toList(),
+          tabs: tabs.map((tabTitle) {
+            return Tab(text: tabTitle);
+          }).toList(),
         ),
         leading: IconButton(
           icon: Icon(Icons.perm_identity),
-          onPressed: () {},
+          onPressed: () {
+            _animationController.forward();
+          },
         ),
         actions: <Widget>[
           IconButton(

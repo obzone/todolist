@@ -5,7 +5,7 @@ import 'package:todolist/views/todolist/time_selector.dart';
 class TimmerControllerView extends StatefulWidget {
   final TodoModel model;
   final Function(int) onStartPress;
-  final Function() onComplete;
+  final Function({bool isDone}) onComplete;
 
   TimmerControllerView({
     Key key,
@@ -46,7 +46,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
       if (status == AnimationStatus.completed) {
         setState(() {
           _animationController.reset();
-          widget.onComplete();
+          widget.onComplete(isDone: true);
         });
       }
     });
@@ -108,7 +108,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
               if (_animationController.status == AnimationStatus.forward) {
                 _animationController.reset();
                 _animationController.value = selectedTaskDuration.toDouble();
-                widget.onComplete();
+                widget.onComplete(isDone: false);
               } else {
                 _animationController.forward();
                 widget.onStartPress(this.selectedTaskDuration);
@@ -116,7 +116,21 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
             });
           },
           child: Icon(_animationController.status == AnimationStatus.forward ? Icons.stop : Icons.play_arrow),
-        )
+        ),
+        if (_animationController.status == AnimationStatus.forward)
+          MaterialButton(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            minWidth: 40,
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              setState(() {
+                _animationController.reset();
+                _animationController.value = selectedTaskDuration.toDouble();
+                widget.onComplete(isDone: true);
+              });
+            },
+            child: Icon(Icons.done),
+          ),
       ],
     );
   }

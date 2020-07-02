@@ -86,6 +86,7 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
+      // TODO 限制一次只能一个任务
       DoHistoryModel doHistoryModel = DoHistoryModel(startTime: DateTime.now(), totalTime: duration ?? 60 * 25);
       if (model.doHistories == null) {
         model.doHistories = [doHistoryModel];
@@ -104,18 +105,21 @@ class TodoListViewModel extends BaseViewModel {
     }
   }
 
-  Future finishDoing(TodoModel model) async {
+  Future finishDoing({TodoModel model, bool isDone}) async {
     try {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
-      if (model.doing != null && model.doing.startTime != null && (model.doing.startTime.millisecondsSinceEpoch + (model.doing.totalTime - 1) * 1000) < DateTime.now().millisecondsSinceEpoch) {
-        // TODO 如果大于25分钟，小于预定时间也算一次
+      if (isDone == true) {
         model.doHistories.last.endTime = DateTime.now();
+        if (model.doing == null || model.doing.startTime == null || (model.doing.startTime.millisecondsSinceEpoch + (model.doing.totalTime - 1) * 1000) >= DateTime.now().millisecondsSinceEpoch) {
+          LocalNotificationService.getInstance().cancelAll();
+        }
       } else {
         model.doHistories.removeLast();
         LocalNotificationService.getInstance().cancelAll();
       }
+
       Wakelock.disable();
       model.updatedTime = DateTime.now();
       this._saveTodoPool();
