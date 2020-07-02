@@ -28,6 +28,7 @@ class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Colors.lightGreen[900],
         title: TabBar(
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white.withAlpha(200),

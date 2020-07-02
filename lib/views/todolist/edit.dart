@@ -62,6 +62,7 @@ class _TodoEditView extends State<TodoEditView> {
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor.withAlpha((255 * widget.transitionAnimation.value).floor()),
           appBar: AppBar(
+            backgroundColor: Colors.lightGreen[900],
             title: Hero(
               tag: 'add',
               child: AnimatedBuilder(
@@ -71,7 +72,7 @@ class _TodoEditView extends State<TodoEditView> {
                     child: Text(
                       '+ add',
                       style: TextStyle(
-                          color: ColorTween(begin: Colors.black87, end: Colors.white).transform(widget.transitionAnimation.value),
+                          color: ColorTween(begin: Theme.of(context).primaryColor, end: Colors.white).transform(widget.transitionAnimation.value),
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
                           decoration: TextDecoration.none),
@@ -106,12 +107,16 @@ class _TodoEditView extends State<TodoEditView> {
                         },
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: Icon(Icons.radio_button_unchecked),
+                          child: Icon(
+                            Icons.radio_button_unchecked,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: Container(
                           child: TextField(
+                            style: TextStyle(color: Theme.of(context).primaryColor),
                             decoration: InputDecoration(border: InputBorder.none),
                             autofocus: true,
                             controller: TextEditingController(text: text),

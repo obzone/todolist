@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/viewmodels/common/launch_load.dart';
 import 'package:todolist/views/common/launch_loading.dart';
-import 'package:todolist/views/playground/main.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
         scaffoldBackgroundColor: Color(0xFFF0F0F0),
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and

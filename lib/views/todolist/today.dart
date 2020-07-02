@@ -63,7 +63,7 @@ class _TodayListView extends State<TodayListView> {
               Row(
                 children: <Widget>[
                   MaterialButton(
-                    child: Icon(model.isDone == true ? Icons.radio_button_checked : Icons.radio_button_unchecked),
+                    child: Icon(model.isDone == true ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: Theme.of(context).primaryColor),
                     onPressed: () {
                       widget.viewModel.done(model: model, done: !(model.isDone == true));
                     },
@@ -76,7 +76,7 @@ class _TodayListView extends State<TodayListView> {
                       child: Text(
                         model.name ?? '',
                         maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
                       ),
                     ),
                   ),
@@ -96,7 +96,7 @@ class _TodayListView extends State<TodayListView> {
                             ...?model.doHistories?.map(
                               (history) => Text(
                                 '✗ ',
-                                style: TextStyle(color: Colors.blue),
+                                style: TextStyle(color: Theme.of(context).primaryColor),
                               ),
                             ),
                             Text(' '),

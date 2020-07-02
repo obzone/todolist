@@ -94,7 +94,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
               String secondString = seconds < 10 ? '0$seconds' : '$seconds';
               return Text(
                 '$minuteString:$secondString.${(_animation.value % 10).floor()}',
-                style: TextStyle(fontSize: 20, fontFamily: 'pingfang', fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontFamily: 'pingfang', fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
               );
             },
           ),
@@ -115,7 +115,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
               }
             });
           },
-          child: Icon(_animationController.status == AnimationStatus.forward ? Icons.stop : Icons.play_arrow),
+          child: Icon(_animationController.status == AnimationStatus.forward ? Icons.stop : Icons.play_arrow, color: Theme.of(context).primaryColor),
         ),
         if (_animationController.status == AnimationStatus.forward)
           MaterialButton(
@@ -129,7 +129,10 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
                 widget.onComplete(isDone: true);
               });
             },
-            child: Icon(Icons.done),
+            child: Icon(
+              Icons.done,
+              color: Theme.of(context).primaryColor,
+            ),
           ),
       ],
     );

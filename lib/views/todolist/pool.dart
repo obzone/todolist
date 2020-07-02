@@ -41,7 +41,7 @@ class _TodoPoolView extends State<TodoPoolView> {
             child: Container(
               child: Text(
                 '+ add',
-                style: TextStyle(color: Colors.black87, fontSize: 20, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 20, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
               ),
             ),
           ),
@@ -126,7 +126,7 @@ class _TodoPoolView extends State<TodoPoolView> {
                   Builder(
                     builder: (context) {
                       return MaterialButton(
-                        child: Icon(model.isDone == true ? Icons.radio_button_checked : isInToday ? Icons.check_box : Icons.check_box_outline_blank),
+                        child: Icon(model.isDone == true ? Icons.radio_button_checked : isInToday ? Icons.check_box : Icons.check_box_outline_blank, color: Theme.of(context).primaryColor),
                         onPressed: () {
                           if (model.isDone == true) {
                             widget.viewModel.done(model: model, done: false);
@@ -145,7 +145,7 @@ class _TodoPoolView extends State<TodoPoolView> {
                       child: Text(
                         model.name ?? '',
                         maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
                       ),
                     ),
                   ),
@@ -165,7 +165,7 @@ class _TodoPoolView extends State<TodoPoolView> {
                             ...?model.doHistories?.map(
                               (history) => Text(
                                 '✗ ',
-                                style: TextStyle(color: Colors.blue),
+                                style: TextStyle(color: Theme.of(context).primaryColor),
                               ),
                             ),
                           ],
