@@ -24,17 +24,27 @@ class _TodoPoolView extends State<TodoPoolView> {
       margin: EdgeInsets.all(10),
       child: MaterialButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TodoEditView(
-                viewModel: TodoListViewModel.getInstance(),
-              ),
+          Navigator.of(context).push(
+            PageRouteBuilder<void>(
+              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                return TodoEditView(
+                  viewModel: TodoListViewModel.getInstance(),
+                  transitionAnimation: animation,
+                );
+              },
             ),
           );
         },
         child: Center(
-          child: Text('+ add'),
+          child: Hero(
+            tag: 'add',
+            child: Container(
+              child: Text(
+                '+ add',
+                style: TextStyle(color: Colors.black87, fontSize: 20, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+              ),
+            ),
+          ),
         ),
       ),
     );
