@@ -37,13 +37,15 @@ class _TodayListView extends State<TodayListView> {
                       values: ['edit', 'put back', 'delete'],
                       onValueChange: (value) {
                         if (value == 'edit') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TodoEditView(
-                                viewModel: TodoListViewModel.getInstance(),
-                                model: model,
-                              ),
+                          Navigator.of(context).push(
+                            PageRouteBuilder<void>(
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                                return TodoEditView(
+                                  viewModel: TodoListViewModel.getInstance(),
+                                  transitionAnimation: animation,
+                                  model: model,
+                                );
+                              },
                             ),
                           );
                         } else if (value == 'put back') {
