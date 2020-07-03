@@ -144,10 +144,13 @@ class _TodoPoolView extends State<TodoPoolView> {
                   ),
                   Container(
                     child: Flexible(
-                      child: Text(
-                        model.name ?? '',
-                        maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                      child: Hero(
+                        tag: model.id,
+                        child: Text(
+                          model.name ?? '',
+                          maxLines: 2,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ),
                   ),

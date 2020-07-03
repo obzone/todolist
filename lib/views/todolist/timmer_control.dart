@@ -65,26 +65,28 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
           padding: EdgeInsets.symmetric(horizontal: 5),
           minWidth: 0,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          onPressed: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) {
-                return TimeSelectorView(
-                  values: durationItems,
-                  selectedItem: 4,
-                  onSelectedItemChanged: (index) {
-                    setState(() {
-                      this.selectedTaskDuration = durationItems[index] * 60;
-                      _animationController.duration = Duration(seconds: this.selectedTaskDuration);
-                      _animation = Tween<double>(begin: selectedTaskDuration * 10.0, end: 0).animate(_animationController);
-                    });
-                  },
-                );
-              },
-            );
-          },
+          onPressed: _animationController.isAnimating
+              ? () {}
+              : () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) {
+                      return TimeSelectorView(
+                        values: durationItems,
+                        selectedItem: 4,
+                        onSelectedItemChanged: (index) {
+                          setState(() {
+                            this.selectedTaskDuration = durationItems[index] * 60;
+                            _animationController.duration = Duration(seconds: this.selectedTaskDuration);
+                            _animation = Tween<double>(begin: selectedTaskDuration * 10.0, end: 0).animate(_animationController);
+                          });
+                        },
+                      );
+                    },
+                  );
+                },
           child: AnimatedBuilder(
             animation: _animation,
             builder: (context, child) {

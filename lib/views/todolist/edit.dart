@@ -39,6 +39,7 @@ class _TodoEditView extends State<TodoEditView> {
       widget.model.type = selectedTodoType;
       widget.viewModel.save();
     } else {
+      if (text == null || text.length == 0) return;
       TodoModel model = TodoModel(
         createdTime: DateTime.now(),
         updatedTime: DateTime.now(),
@@ -64,15 +65,15 @@ class _TodoEditView extends State<TodoEditView> {
           appBar: AppBar(
             backgroundColor: Colors.lightGreen[900],
             title: Hero(
-              tag: 'add',
+              tag: '${widget.model?.id}_appbar_title' ?? 'add',
               child: AnimatedBuilder(
                 animation: widget.transitionAnimation,
                 builder: (context, child) {
                   return Container(
                     child: Text(
-                      '+ add',
+                      widget.model == null ? '+ add' : 'edit',
                       style: TextStyle(
-                          color: ColorTween(begin: Theme.of(context).primaryColor, end: Colors.white).transform(widget.transitionAnimation.value),
+                          color: widget.model == null ? ColorTween(begin: Theme.of(context).primaryColor, end: Colors.white).transform(widget.transitionAnimation.value) : Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
                           decoration: TextDecoration.none),
@@ -114,15 +115,20 @@ class _TodoEditView extends State<TodoEditView> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          child: TextField(
-                            style: TextStyle(color: Theme.of(context).primaryColor),
-                            decoration: InputDecoration(border: InputBorder.none),
-                            autofocus: true,
-                            controller: TextEditingController(text: text),
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.done,
-                            onChanged: this._onTextFieldchangeText,
+                        child: Hero(
+                          tag: widget.model?.id ?? '',
+                          child: Material(
+                            child: Container(
+                              child: TextField(
+                                style: TextStyle(color: Theme.of(context).primaryColor),
+                                decoration: InputDecoration(border: InputBorder.none),
+                                autofocus: true,
+                                controller: TextEditingController(text: text),
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.done,
+                                onChanged: this._onTextFieldchangeText,
+                              ),
+                            ),
                           ),
                         ),
                       )
