@@ -117,7 +117,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
               }
             });
           },
-          child: Icon(_animationController.status == AnimationStatus.forward ? Icons.stop : Icons.play_arrow, color: Theme.of(context).primaryColor),
+          child: Icon(_animationController.status == AnimationStatus.forward ? Icons.stop : Icons.play_circle_outline, color: Theme.of(context).primaryColor),
         ),
         if (_animationController.status == AnimationStatus.forward)
           MaterialButton(

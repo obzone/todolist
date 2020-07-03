@@ -90,7 +90,7 @@ class _TodoEditView extends State<TodoEditView> {
             ],
           ),
           body: Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.all(8),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -98,20 +98,14 @@ class _TodoEditView extends State<TodoEditView> {
                   color: Colors.white,
                   child: Row(
                     children: <Widget>[
-                      AnimatedBuilder(
-                        animation: widget.transitionAnimation,
-                        builder: (context, child) {
-                          return Opacity(
-                            opacity: widget.transitionAnimation.value,
-                            child: child,
-                          );
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: Icon(
-                            Icons.radio_button_unchecked,
-                            color: Theme.of(context).primaryColor,
-                          ),
+                      Container(
+                        margin: EdgeInsets.all(8),
+                        child: MaterialButton(
+                          child: Icon(Icons.radio_button_unchecked, color: Theme.of(context).primaryColor),
+                          onPressed: () {},
+                          padding: EdgeInsets.zero,
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 40,
                         ),
                       ),
                       Expanded(
@@ -120,7 +114,7 @@ class _TodoEditView extends State<TodoEditView> {
                           child: Material(
                             child: Container(
                               child: TextField(
-                                style: TextStyle(color: Theme.of(context).primaryColor),
+                                style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18),
                                 decoration: InputDecoration(border: InputBorder.none),
                                 autofocus: true,
                                 controller: TextEditingController(text: text),

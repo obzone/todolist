@@ -20,7 +20,7 @@ class TodayListView extends StatefulWidget {
 class _TodayListView extends State<TodayListView> {
   Widget _buildItem(TodoModel model) {
     return Container(
-      margin: EdgeInsets.only(left: 10, top: 10, right: 10),
+      margin: EdgeInsets.only(left: 8, top: 8, right: 8),
       decoration: BoxDecoration(color: Colors.white),
       child: MaterialButton(
         padding: EdgeInsets.zero,
@@ -75,10 +75,13 @@ class _TodayListView extends State<TodayListView> {
                   ),
                   Container(
                     child: Flexible(
-                      child: Text(
-                        model.name ?? '',
-                        maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                      child: Hero(
+                        tag: model.id,
+                        child: Text(
+                          model.name ?? '',
+                          maxLines: 2,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ),
                   ),
