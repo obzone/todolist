@@ -4,6 +4,7 @@ import 'package:todolist/models/todo.dart';
 import 'package:todolist/viewmodels/list/list.dart';
 import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
+import 'package:todolist/views/todolist/todo_deadline.dart';
 
 class TodoPoolView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -179,14 +180,8 @@ class _TodoPoolView extends State<TodoPoolView> {
                           Container(
                             height: 5,
                           ),
-                        Container(
-                          // margin: EdgeInsets.only(top: 5),
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          color: Theme.of(context).primaryColor,
-                          child: Text(
-                            model.type ?? '',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        TodoDeadlineView(
+                          model: model,
                         ),
                       ],
                     ),

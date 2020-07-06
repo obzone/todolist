@@ -5,6 +5,7 @@ import 'package:todolist/viewmodels/list/list.dart';
 import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
 import 'package:todolist/views/todolist/timmer_control.dart';
+import 'package:todolist/views/todolist/todo_deadline.dart';
 
 class TodayListView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -108,13 +109,8 @@ class _TodayListView extends State<TodayListView> {
                           ],
                         ),
                         Container(height: 5),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          color: Theme.of(context).primaryColor,
-                          child: Text(
-                            model.type ?? '',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        TodoDeadlineView(
+                          model: model,
                         ),
                       ],
                     ),

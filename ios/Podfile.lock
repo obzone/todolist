@@ -16,6 +16,11 @@ PODS:
     - Flutter
   - wakelock (0.0.1):
     - Flutter
+  - wechat_kit (1.1.0):
+    - Flutter
+    - wechat_kit/vendor (= 1.1.0)
+  - wechat_kit/vendor (1.1.0):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -27,6 +32,7 @@ DEPENDENCIES:
   - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
   - url_launcher_web (from `.symlinks/plugins/url_launcher_web/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - wechat_kit (from `.symlinks/plugins/wechat_kit/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -47,6 +53,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_web/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
+  wechat_kit:
+    :path: ".symlinks/plugins/wechat_kit/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
@@ -58,6 +66,7 @@ SPEC CHECKSUMS:
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
   wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
+  wechat_kit: de05a5ee6c82606aefaee03c507d9db2e5c725ad
 
 PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
 

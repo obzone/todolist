@@ -6,12 +6,10 @@ class Config {
 
   static final httpClientTimeOutDuration = 30;
 
-  static final version = '1.0.1';
+  static final version = '1.0.0';
 
-  // test
-  // static final wechat = {
-  //   "schema": 'wwauthf89009662322d93e000033',
-  //   "corpId": 'wxf89009662322d93e',
-  //   "agentId": '1000033',
-  // };
+  static final wechat = {
+    "appId": 'wxcf3d07c4f196d533',
+    "universalLink": 'https://gamrket.fun/',
+  };
 }
