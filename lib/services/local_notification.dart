@@ -18,6 +18,7 @@ class LocalNotificationService {
       print(id);
       print(title);
       print(body);
+      return Future.value();
     });
     InitializationSettings initializationSettings = InitializationSettings(androidInitializationSettings, iosInitializationSettings);
     return flutterLocalNotificationsPlugin.initialize(initializationSettings);

@@ -86,7 +86,6 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
-      // TODO 限制一次只能一个任务
       DoHistoryModel doHistoryModel = DoHistoryModel(startTime: DateTime.now(), totalTime: duration ?? 60 * 25);
       if (model.doHistories == null) {
         model.doHistories = [doHistoryModel];

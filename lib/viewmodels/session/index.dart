@@ -68,7 +68,7 @@ class SessionViewModel extends BaseViewModel {
       if (isWechatInstalled == null) {
         isWechatInstalled = await WechatService.getInstance().isWechatInstalled();
       }
-      if (isWechatInstalled != true) throw CommonException('没有安装微信');
+      if (isWechatInstalled != true) throw CommonException('no wechat installed');
       String code = await WechatService.getInstance().loginWithWechat();
       String token = await SessionService.loginWithWechatSsoCode(code);
       SharedPreferences prefs = await SharedPreferences.getInstance();

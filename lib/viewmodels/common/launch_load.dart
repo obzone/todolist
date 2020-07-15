@@ -1,7 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todolist/models/exception.dart';
 import 'package:todolist/services/local_notification.dart';
 import 'package:todolist/viewmodels/base.dart';
 import 'package:todolist/viewmodels/list/list.dart';
+import 'package:todolist/viewmodels/session/index.dart';
 
 class LaunchLoadingViewModel extends BaseViewModel {
   bool needShowGuideView = false;
@@ -13,6 +15,7 @@ class LaunchLoadingViewModel extends BaseViewModel {
       notifyListeners();
       await this._checkIsNeedShowGuideView();
       await LocalNotificationService.getInstance().initialize();
+      await this._loadToken();
       await TodoListViewModel.getInstance().loadTodosFromLocal();
     } catch (e) {
       this.e = e;
@@ -35,5 +38,12 @@ class LaunchLoadingViewModel extends BaseViewModel {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future _loadToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = await prefs.get('token');
+    if (token == null) throw CommonException('');
+    SessionViewModel.getInstance().token = token;
   }
 }
