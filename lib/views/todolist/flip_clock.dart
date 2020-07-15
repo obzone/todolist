@@ -28,12 +28,14 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
 
     controller = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0, end: pi).animate(controller);
+
+    controller.forward();
   }
 
   _buildNumberWidget({String value, double fontOffsetY}) {
     return ClipRect(
       child: Container(
-        color: Colors.green,
+        color: Colors.black,
         child: CustomPaint(
           size: Size(100, 70),
           painter: NumberPainter(value: value, fontOffsetY: fontOffsetY),
@@ -53,6 +55,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.black,
       child: Center(
         child: Container(
           height: 140,
@@ -111,29 +114,18 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
     super.initState();
 
     controller = AnimationController(duration: Duration(seconds: widget.seconds), vsync: this);
-    controller.addStatusListener((status) {});
     animation = Tween<double>(begin: widget.seconds.toDouble(), end: 0).animate(controller);
+
+    controller.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              controller.forward();
-            },
-            icon: Icon(Icons.play_circle_outline),
-          ),
-          IconButton(
-            icon: Icon(Icons.stop),
-            onPressed: () {
-              controller.reset();
-            },
-          )
-        ],
+        backgroundColor: Colors.black,
       ),
+      backgroundColor: Colors.black,
       body: AnimatedBuilder(
         animation: animation,
         builder: (context, child) {
