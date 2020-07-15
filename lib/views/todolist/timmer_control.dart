@@ -73,6 +73,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
                       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
                         return FlipClockView(
                           seconds: (_animation.value / 10).floor(),
+                          title: widget.model.name,
                         );
                       },
                     ),

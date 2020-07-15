@@ -96,8 +96,13 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
 
 class FlipClockView extends StatefulWidget {
   final int seconds;
+  final String title;
 
-  FlipClockView({Key key, this.seconds}) : super(key: key);
+  FlipClockView({
+    Key key,
+    this.seconds,
+    this.title,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -124,6 +129,7 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        title: Text(widget.title ?? ''),
       ),
       backgroundColor: Colors.black,
       body: AnimatedBuilder(
