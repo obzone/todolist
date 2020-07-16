@@ -46,6 +46,7 @@ class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
                 ),
               ),
               ListTile(
+                leading: Icon(Icons.access_time),
                 onTap: () {
                   Navigator.of(context).push(
                     PageRouteBuilder<void>(
@@ -67,6 +68,7 @@ class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
                 color: Theme.of(context).dividerColor,
               ),
               ListTile(
+                leading: Icon(Icons.system_update),
                 title: Text('version: 1.0.0'),
               ),
             ],
