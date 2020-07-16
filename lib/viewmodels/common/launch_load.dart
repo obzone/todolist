@@ -15,7 +15,7 @@ class LaunchLoadingViewModel extends BaseViewModel {
       notifyListeners();
       await this._checkIsNeedShowGuideView();
       await LocalNotificationService.getInstance().initialize();
-      await this._loadToken();
+      // await this._loadToken();
       await TodoListViewModel.getInstance().loadTodosFromLocal();
     } catch (e) {
       this.e = e;

@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class FlipCounterView extends StatefulWidget {
+  static double itemHeight = 70;
+  static double itemWidth = 100;
+
   final String currentValue;
   final String nextValue;
 
@@ -26,7 +29,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
   void initState() {
     super.initState();
 
-    controller = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
+    controller = AnimationController(duration: Duration(milliseconds: 500), vsync: this);
     animation = Tween<double>(begin: 0, end: pi).animate(controller);
 
     controller.forward();
@@ -37,7 +40,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
       child: Container(
         color: Colors.black,
         child: CustomPaint(
-          size: Size(100, 70),
+          size: Size(FlipCounterView.itemWidth, FlipCounterView.itemHeight),
           painter: NumberPainter(value: value, fontOffsetY: fontOffsetY),
         ),
       ),
@@ -58,8 +61,8 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
       color: Colors.black,
       child: Center(
         child: Container(
-          height: 140,
-          width: 100,
+          height: FlipCounterView.itemHeight * 2,
+          width: FlipCounterView.itemWidth,
           color: Colors.black,
           child: AnimatedBuilder(
             animation: animation,
@@ -69,7 +72,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
                   _buildNumberWidget(value: widget.nextValue),
                   Positioned(
                     top: 70,
-                    child: _buildNumberWidget(value: widget.currentValue, fontOffsetY: -70),
+                    child: _buildNumberWidget(value: widget.currentValue, fontOffsetY: -FlipCounterView.itemHeight),
                   ),
                   Transform(
                     alignment: Alignment.bottomCenter,
@@ -81,7 +84,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
                     child: Transform(
                       alignment: Alignment.topCenter,
                       transform: new Matrix4.rotationX(animation.value < (pi / 2) ? (pi / 2) : pi - animation.value),
-                      child: _buildNumberWidget(value: widget.nextValue, fontOffsetY: -70),
+                      child: _buildNumberWidget(value: widget.nextValue, fontOffsetY: -FlipCounterView.itemHeight),
                     ),
                   ),
                 ],
@@ -159,7 +162,7 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
             builder: (context, constraints) {
               if (constraints.maxHeight > constraints.maxWidth) {
                 return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -173,6 +176,9 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                           nextValue: '$minutesQuantile',
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 50,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +197,7 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                 );
               } else {
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -205,6 +211,9 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                           nextValue: '$minutesQuantile',
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      width: 70,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
