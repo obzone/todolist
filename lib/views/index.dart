@@ -41,7 +41,10 @@ class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
                 alignment: Alignment.centerLeft,
                 height: 56,
                 decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-                child: Text('functions'),
+                child: Icon(
+                  Icons.view_headline,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -51,7 +54,7 @@ class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
                         return FlipClockView(
                           bengin: (DateTime.now().hour * 3600 + DateTime.now().minute * 60 + DateTime.now().second).floor(),
                           duration: 1000000,
-                          title: 'time',
+                          title: '',
                           decline: false,
                         );
                       },
