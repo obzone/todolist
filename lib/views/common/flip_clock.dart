@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class FlipCounterView extends StatefulWidget {
   static double itemHeight = 70;
@@ -138,6 +140,16 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
     }
 
     controller.forward();
+    if (widget.decline == false) {
+      SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    }
+  }
+
+  @override
+  deactivate() {
+    super.deactivate();
+
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
 
   _buildDeclineClock(
@@ -180,43 +192,49 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                     nextValue: '$secondsQuantile',
                   ),
                 ],
-              )
+              ),
+              SizedBox(
+                height: 50,
+              ),
             ],
           );
         } else {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlipCounterView(
-                    currentValue: '${minutesTenths == 5 ? 0 : minutesTenths + 1}',
-                    nextValue: '$minutesTenths',
-                  ),
-                  FlipCounterView(
-                    currentValue: '${minutesQuantile == 9 ? 0 : minutesQuantile + 1}',
-                    nextValue: '$minutesQuantile',
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 70,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlipCounterView(
-                    currentValue: '${secondsTenths == 5 ? 0 : secondsTenths + 1}',
-                    nextValue: '$secondsTenths',
-                  ),
-                  FlipCounterView(
-                    currentValue: '${secondsQuantile == 9 ? 0 : secondsQuantile + 1}',
-                    nextValue: '$secondsQuantile',
-                  ),
-                ],
-              )
-            ],
+          return Container(
+            margin: EdgeInsets.only(bottom: 56),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlipCounterView(
+                      currentValue: '${minutesTenths == 5 ? 0 : minutesTenths + 1}',
+                      nextValue: '$minutesTenths',
+                    ),
+                    FlipCounterView(
+                      currentValue: '${minutesQuantile == 9 ? 0 : minutesQuantile + 1}',
+                      nextValue: '$minutesQuantile',
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 70,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlipCounterView(
+                      currentValue: '${secondsTenths == 5 ? 0 : secondsTenths + 1}',
+                      nextValue: '$secondsTenths',
+                    ),
+                    FlipCounterView(
+                      currentValue: '${secondsQuantile == 9 ? 0 : secondsQuantile + 1}',
+                      nextValue: '$secondsQuantile',
+                    ),
+                  ],
+                )
+              ],
+            ),
           );
         }
       },
@@ -281,59 +299,65 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                     nextValue: '$secondsQuantile',
                   ),
                 ],
-              )
+              ),
+              SizedBox(
+                height: 50,
+              ),
             ],
           );
         } else {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlipCounterView(
-                    currentValue: '${hoursTenths == 0 ? 2 : hoursTenths - 1}',
-                    nextValue: '$hoursTenths',
-                  ),
-                  FlipCounterView(
-                    currentValue: '${houresQuantile == 0 ? 9 : houresQuantile - 1}',
-                    nextValue: '$houresQuantile',
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlipCounterView(
-                    currentValue: '${minutesTenths == 0 ? 5 : minutesTenths - 1}',
-                    nextValue: '$minutesTenths',
-                  ),
-                  FlipCounterView(
-                    currentValue: '${minutesQuantile == 0 ? 9 : minutesQuantile - 1}',
-                    nextValue: '$minutesQuantile',
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlipCounterView(
-                    currentValue: '${secondsTenths == 0 ? 5 : secondsTenths - 1}',
-                    nextValue: '$secondsTenths',
-                  ),
-                  FlipCounterView(
-                    currentValue: '${secondsQuantile == 0 ? 9 : secondsQuantile - 1}',
-                    nextValue: '$secondsQuantile',
-                  ),
-                ],
-              )
-            ],
+          return Container(
+            margin: EdgeInsets.only(bottom: 50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlipCounterView(
+                      currentValue: '${hoursTenths == 0 ? 2 : hoursTenths - 1}',
+                      nextValue: '$hoursTenths',
+                    ),
+                    FlipCounterView(
+                      currentValue: '${houresQuantile == 0 ? 9 : houresQuantile - 1}',
+                      nextValue: '$houresQuantile',
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlipCounterView(
+                      currentValue: '${minutesTenths == 0 ? 5 : minutesTenths - 1}',
+                      nextValue: '$minutesTenths',
+                    ),
+                    FlipCounterView(
+                      currentValue: '${minutesQuantile == 0 ? 9 : minutesQuantile - 1}',
+                      nextValue: '$minutesQuantile',
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlipCounterView(
+                      currentValue: '${secondsTenths == 0 ? 5 : secondsTenths - 1}',
+                      nextValue: '$secondsTenths',
+                    ),
+                    FlipCounterView(
+                      currentValue: '${secondsQuantile == 0 ? 9 : secondsQuantile - 1}',
+                      nextValue: '$secondsQuantile',
+                    ),
+                  ],
+                )
+              ],
+            ),
           );
         }
       },
