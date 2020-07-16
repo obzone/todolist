@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/models/todo.dart';
-import 'package:todolist/views/todolist/flip_clock.dart';
+import 'package:todolist/views/common/flip_clock.dart';
 import 'package:todolist/views/todolist/time_selector.dart';
 
 class TimmerControllerView extends StatefulWidget {
@@ -72,7 +72,7 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
                     PageRouteBuilder<void>(
                       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
                         return FlipClockView(
-                          seconds: (_animation.value / 10).floor(),
+                          duration: (_animation.value / 10).floor(),
                           title: widget.model.name,
                         );
                       },
