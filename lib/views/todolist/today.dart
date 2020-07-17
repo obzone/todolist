@@ -5,7 +5,7 @@ import 'package:todolist/viewmodels/list/list.dart';
 import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
 import 'package:todolist/views/todolist/timmer_control.dart';
-import 'package:todolist/views/todolist/todo_deadline.dart';
+import 'package:todolist/views/todolist/summary.dart';
 
 class TodayListView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -109,7 +109,7 @@ class _TodayListView extends State<TodayListView> {
                           ],
                         ),
                         Container(height: 5),
-                        TodoDeadlineView(
+                        SummeryView(
                           model: model,
                         ),
                       ],

@@ -8,18 +8,18 @@ enum deadlineType {
   workingTime,
 }
 
-class TodoDeadlineView extends StatefulWidget {
+class SummeryView extends StatefulWidget {
   final TodoModel model;
 
-  TodoDeadlineView({Key key, @required this.model}) : super(key: key);
+  SummeryView({Key key, @required this.model}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _TodoDeadlineView();
+    return _SummeryView();
   }
 }
 
-class _TodoDeadlineView extends State<TodoDeadlineView> {
+class _SummeryView extends State<SummeryView> {
   int deadlineTypeIndex = 0;
 
   _totaltime() {

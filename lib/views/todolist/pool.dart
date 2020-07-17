@@ -4,7 +4,7 @@ import 'package:todolist/models/todo.dart';
 import 'package:todolist/viewmodels/list/list.dart';
 import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
-import 'package:todolist/views/todolist/todo_deadline.dart';
+import 'package:todolist/views/todolist/summary.dart';
 
 class TodoPoolView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -180,7 +180,7 @@ class _TodoPoolView extends State<TodoPoolView> {
                           Container(
                             height: 5,
                           ),
-                        TodoDeadlineView(
+                        SummeryView(
                           model: model,
                         ),
                       ],
