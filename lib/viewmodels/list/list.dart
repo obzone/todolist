@@ -58,7 +58,7 @@ class TodoListViewModel extends BaseViewModel {
       this.todayList.where((element) {
         return element.doing != null && element.doing.endTime == null && ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000) < DateTime.now().millisecondsSinceEpoch);
       }).forEach((element) {
-        element.doing.endTime = DateTime.now();
+        element.doing.endTime = element.doing.startTime.add(Duration(seconds: element.doing.totalTime));
       });
       this.save();
     } catch (e) {
