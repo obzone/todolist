@@ -28,7 +28,7 @@ class _TodoDeadlineView extends State<TodoDeadlineView> {
     int totalTime = 0;
     widget.model.doHistories.forEach((element) {
       if (element.startTime == null || element.endTime == null) return;
-      totalTime = element.endTime.millisecondsSinceEpoch - element.startTime.millisecondsSinceEpoch;
+      totalTime += (element.endTime.millisecondsSinceEpoch - element.startTime.millisecondsSinceEpoch);
     });
 
     int hours = (totalTime / (1000 * 60 * 60)).floor();
