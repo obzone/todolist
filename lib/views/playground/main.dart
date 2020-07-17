@@ -136,7 +136,6 @@ class RadialExpansionDemo extends StatelessWidget {
                     return AnimatedBuilder(
                       animation: animation,
                       builder: (BuildContext context, Widget child) {
-                        print(animation.value);
                         return Opacity(
                           opacity: opacityCurve.transform(animation.value),
                           child: _buildPage(context, imageName, description, animation),

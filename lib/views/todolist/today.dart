@@ -6,6 +6,7 @@ import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
 import 'package:todolist/views/todolist/timmer_control.dart';
 import 'package:todolist/views/todolist/summary.dart';
+import 'package:todolist/views/todolist/tomato_statistic.dart';
 
 class TodayListView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -97,16 +98,8 @@ class _TodayListView extends State<TodayListView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            ...?model.doHistories?.map(
-                              (history) => Text(
-                                '✗ ',
-                                style: TextStyle(color: Theme.of(context).primaryColor),
-                              ),
-                            ),
-                            Text(' '),
-                          ],
+                        TomatoStatisticView(
+                          model: model,
                         ),
                         Container(height: 5),
                         SummeryView(
