@@ -21,7 +21,7 @@ class TimmerControllerView extends StatefulWidget {
   }
 }
 
-class _TimmerControllerView extends State<TimmerControllerView> with SingleTickerProviderStateMixin {
+class _TimmerControllerView extends State<TimmerControllerView> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   Animation<double> _animation;
   AnimationController _animationController;
 
@@ -52,6 +52,25 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
       }
     });
 
+    this._reloadLastTimer();
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      this._reloadLastTimer();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  _reloadLastTimer() {
     if (widget.model.doing != null && widget.model.doing?.endTime == null) {
       _animationController.value = 1 - (widget.model.doing.surplusSeconds / selectedTaskDuration);
       _animationController.forward();
