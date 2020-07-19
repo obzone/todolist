@@ -56,7 +56,7 @@ class TodoListViewModel extends BaseViewModel {
           .cast<TodoModel>();
       this.todayList = this.todoPool?.where((poolModel) => todayTodos.any((todayModel) => poolModel.id == todayModel.id))?.toList() ?? [];
       this.todayList.where((element) {
-        return element.doing != null && element.doing.endTime == null && ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000) < DateTime.now().millisecondsSinceEpoch);
+        return element.doing != null && element.doing.endTime == null && ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000) > DateTime.now().millisecondsSinceEpoch);
       }).forEach((element) {
         element.doing.endTime = element.doing.startTime.add(Duration(seconds: element.doing.totalTime));
       });

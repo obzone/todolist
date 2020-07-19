@@ -72,8 +72,15 @@ class _TimmerControllerView extends State<TimmerControllerView> with SingleTicke
 
   _reloadLastTimer() {
     if (widget.model.doing != null && widget.model.doing?.endTime == null) {
-      _animationController.value = 1 - (widget.model.doing.surplusSeconds / selectedTaskDuration);
-      _animationController.forward();
+      if (widget.model.doing.surplusSeconds == 0) {
+        setState(() {
+          _animationController.reset();
+          widget.onComplete(isDone: true);
+        });
+      } else {
+        _animationController.value = 1 - (widget.model.doing.surplusSeconds / selectedTaskDuration);
+        _animationController.forward();
+      }
     }
   }
 
