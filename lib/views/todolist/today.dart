@@ -51,6 +51,7 @@ class _TodayListView extends State<TodayListView> {
                             ),
                           );
                         } else if (value == 'put back') {
+                          model.updatedTime = DateTime.now();
                           widget.viewModel.removeTodayTodo(model);
                         } else if (value == 'delete') {
                           widget.viewModel.destoryTodo(model);

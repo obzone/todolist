@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class FlipCounterView extends StatefulWidget {
   static double itemHeight = 70;
@@ -42,7 +41,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
       child: Container(
         color: Colors.black,
         child: CustomPaint(
-          size: Size(FlipCounterView.itemWidth, FlipCounterView.itemHeight),
+          size: Size(FlipCounterView.itemWidth, FlipCounterView.itemHeight - 2),
           painter: NumberPainter(value: value, fontOffsetY: fontOffsetY),
         ),
       ),
@@ -73,7 +72,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
                 children: <Widget>[
                   _buildNumberWidget(value: widget.nextValue),
                   Positioned(
-                    top: 70,
+                    top: 71,
                     child: _buildNumberWidget(value: widget.currentValue, fontOffsetY: -FlipCounterView.itemHeight),
                   ),
                   Transform(
@@ -82,7 +81,7 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
                     child: _buildNumberWidget(value: widget.currentValue),
                   ),
                   Positioned(
-                    top: 70,
+                    top: 71,
                     child: Transform(
                       alignment: Alignment.topCenter,
                       transform: new Matrix4.rotationX(animation.value < (pi / 2) ? (pi / 2) : pi - animation.value),
@@ -217,8 +216,12 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                     ),
                   ],
                 ),
-                SizedBox(
-                  width: 70,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    ':',
+                    style: TextStyle(fontSize: 100, color: Colors.white),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -324,8 +327,11 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                     ),
                   ],
                 ),
-                SizedBox(
-                  width: 30,
+                Container(
+                  child: Text(
+                    ':',
+                    style: TextStyle(fontSize: 100, color: Colors.white),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -340,8 +346,11 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
                     ),
                   ],
                 ),
-                SizedBox(
-                  width: 30,
+                Container(
+                  child: Text(
+                    ':',
+                    style: TextStyle(fontSize: 100, color: Colors.white),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

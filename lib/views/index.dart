@@ -47,7 +47,8 @@ class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
               ),
               ListTile(
                 leading: Icon(Icons.access_time),
-                onTap: () {
+                onTap: () async {
+                  await Navigator.of(context).maybePop();
                   Navigator.of(context).push(
                     PageRouteBuilder<void>(
                       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {

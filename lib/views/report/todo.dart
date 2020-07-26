@@ -78,8 +78,8 @@ class _TodoReportView extends State<TodoReportView> {
                     dataSource: groupedhistories.keys.toList(),
                     xValueMapper: (item, _) => item,
                     yValueMapper: (item, index) {
-                      if (groupedhistories[item] != null && groupedhistories[item].length > i) {
-                        int tomatoWorkTime = groupedhistories[item][i].endTime.millisecondsSinceEpoch - groupedhistories[item][i].startTime.millisecondsSinceEpoch;
+                      if (groupedhistories[item] != null && groupedhistories[item].length > i && groupedhistories[item][i] != null && groupedhistories[item][i].endTime != null) {
+                        int tomatoWorkTime = groupedhistories[item][i].endTime.millisecondsSinceEpoch - groupedhistories[item][i].startTime?.millisecondsSinceEpoch;
                         return (tomatoWorkTime / (1000 * 60)).ceil();
                       } else {
                         return null;

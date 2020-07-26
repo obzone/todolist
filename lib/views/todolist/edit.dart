@@ -37,6 +37,7 @@ class _TodoEditView extends State<TodoEditView> {
     if (widget.model != null) {
       widget.model.name = text;
       widget.model.type = selectedTodoType;
+      widget.model.updatedTime = DateTime.now();
       widget.viewModel.save();
     } else {
       if (text == null || text.length == 0) return;

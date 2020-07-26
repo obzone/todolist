@@ -33,6 +33,23 @@ class TodoListViewModel extends BaseViewModel {
     return 'TODO:ALL';
   }
 
+  _sortTodos() {
+    todoPool.sort((prev, current) {
+      if (todayList.any((element) => element == current)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    todayList.sort((prev, current) {
+      if (todayList.any((element) => element == current)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   Future loadTodosFromLocal() async {
     try {
       this.isLoading = true;
@@ -56,10 +73,12 @@ class TodoListViewModel extends BaseViewModel {
           .cast<TodoModel>();
       this.todayList = this.todoPool?.where((poolModel) => todayTodos.any((todayModel) => poolModel.id == todayModel.id))?.toList() ?? [];
       this.todayList.where((element) {
-        return element.doing != null && element.doing.endTime == null && ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000) > DateTime.now().millisecondsSinceEpoch);
+        return element.doing != null && element.doing.endTime == null && ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000) < DateTime.now().millisecondsSinceEpoch);
       }).forEach((element) {
         element.doing.endTime = element.doing.startTime.add(Duration(seconds: element.doing.totalTime));
+        element.updatedTime = DateTime.now();
       });
+      _sortTodos();
       this.save();
     } catch (e) {
       this.e = e;
@@ -104,6 +123,7 @@ class TodoListViewModel extends BaseViewModel {
     }
   }
 
+  /// 完成一次番茄
   Future finishDoing({TodoModel model, bool isDone}) async {
     try {
       this.isLoading = true;
@@ -118,7 +138,6 @@ class TodoListViewModel extends BaseViewModel {
         model.doHistories.removeLast();
         LocalNotificationService.getInstance().cancelAll();
       }
-
       Wakelock.disable();
       model.updatedTime = DateTime.now();
       this._saveTodoPool();
@@ -135,8 +154,7 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
-      this._saveTodayTodo();
-      this._saveTodoPool();
+      this.save();
     } catch (e) {
       this.e = e;
     } finally {
@@ -145,6 +163,7 @@ class TodoListViewModel extends BaseViewModel {
     }
   }
 
+  /// 完成任务
   Future done({TodoModel model, bool done}) async {
     try {
       this.isLoading = true;
@@ -171,6 +190,8 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       todayList.add(model);
+      model.updatedTime = DateTime.now();
+      _sortTodos();
       this._saveTodayTodo();
     } catch (e) {
       this.e = e;
@@ -186,6 +207,7 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       this.todayList = todayList.where((element) => element.id != model.id).toList();
+      this._sortTodos();
       this._saveTodayTodo();
     } catch (e) {
       this.e = e;
@@ -201,6 +223,7 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       todoPool.add(model);
+      _sortTodos();
       this._saveTodoPool();
     } catch (e) {
       this.e = e;
