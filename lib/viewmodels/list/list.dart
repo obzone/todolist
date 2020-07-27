@@ -37,12 +37,14 @@ class TodoListViewModel extends BaseViewModel {
     todoPool.sort((prev, current) {
       if (todayList.any((element) => element == current)) {
         return 1;
+      } else if (prev.updatedTime.isBefore(current.updatedTime) && !todayList.any((element) => element == prev)) {
+        return 1;
       } else {
         return 0;
       }
     });
     todayList.sort((prev, current) {
-      if (todayList.any((element) => element == current)) {
+      if (prev.updatedTime.isBefore(current.updatedTime)) {
         return 1;
       } else {
         return 0;
@@ -154,6 +156,7 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
+      this._sortTodos();
       this.save();
     } catch (e) {
       this.e = e;
@@ -169,6 +172,9 @@ class TodoListViewModel extends BaseViewModel {
       this.isLoading = true;
       this.e = null;
       notifyListeners();
+      if (!todayList.contains(model)) {
+        todayList.add(model);
+      }
       model.isDone = done;
       if (model.doHistories != null && model.doHistories.length > 0 && model.doHistories.last.endTime == null) {
         model.doHistories.last.endTime = DateTime.now();
@@ -190,7 +196,6 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       todayList.add(model);
-      model.updatedTime = DateTime.now();
       _sortTodos();
       this._saveTodayTodo();
     } catch (e) {

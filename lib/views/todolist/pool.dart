@@ -99,7 +99,7 @@ class _TodoPoolView extends State<TodoPoolView> {
                   context: context,
                   builder: (context) {
                     return OpearateSelectorView(
-                      values: ['edit', 'delete'],
+                      values: ['edit', 'finish', 'delete'],
                       onValueChange: (value) {
                         if (value == 'edit') {
                           Navigator.of(context).push(
@@ -113,6 +113,8 @@ class _TodoPoolView extends State<TodoPoolView> {
                               },
                             ),
                           );
+                        } else if (value == 'finish') {
+                          widget.viewModel.done(model: model, done: true);
                         } else if (value == 'delete') {
                           widget.viewModel.destoryTodo(model);
                         }
