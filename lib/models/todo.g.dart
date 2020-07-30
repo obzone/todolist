@@ -14,6 +14,7 @@ DoHistoryModel _$DoHistoryModelFromJson(Map<String, dynamic> json) {
     endTime: json['endTime'] == null
         ? null
         : DateTime.parse(json['endTime'] as String),
+    totalTime: json['totalTime'] as int,
   );
 }
 
@@ -21,6 +22,7 @@ Map<String, dynamic> _$DoHistoryModelToJson(DoHistoryModel instance) =>
     <String, dynamic>{
       'startTime': instance.startTime?.toIso8601String(),
       'endTime': instance.endTime?.toIso8601String(),
+      'totalTime': instance.totalTime,
     };
 
 TodoModel _$TodoModelFromJson(Map<String, dynamic> json) {
@@ -34,9 +36,9 @@ TodoModel _$TodoModelFromJson(Map<String, dynamic> json) {
     updatedTime: json['updatedTime'] == null
         ? null
         : DateTime.parse(json['updatedTime'] as String),
+    type: json['type'] as String,
   )
     ..isDone = json['isDone'] as bool
-    ..type = json['type'] as String
     ..doHistories = (json['doHistories'] as List)
         ?.map((e) => e == null
             ? null

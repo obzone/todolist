@@ -7,8 +7,9 @@ import 'package:todolist/views/common/segment_control.dart';
 class TodoEditView extends StatefulWidget {
   final TodoListViewModel viewModel;
   final TodoModel model;
+  final Animation<double> transitionAnimation;
 
-  TodoEditView({Key key, this.viewModel, this.model}) : super(key: key);
+  TodoEditView({Key key, this.viewModel, this.model, this.transitionAnimation}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -36,8 +37,10 @@ class _TodoEditView extends State<TodoEditView> {
     if (widget.model != null) {
       widget.model.name = text;
       widget.model.type = selectedTodoType;
+      widget.model.updatedTime = DateTime.now();
       widget.viewModel.save();
     } else {
+      if (text == null || text.length == 0) return;
       TodoModel model = TodoModel(
         createdTime: DateTime.now(),
         updatedTime: DateTime.now(),
@@ -55,55 +58,101 @@ class _TodoEditView extends State<TodoEditView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('data'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.done),
-            onPressed: this._onDonePress,
-          )
-        ],
-      ),
-      body: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Container(
-              color: Colors.white,
-              child: Row(
+    return Material(
+      child: AnimatedBuilder(
+        animation: widget.transitionAnimation,
+        builder: (context, child) {
+          return Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor.withAlpha((255 * widget.transitionAnimation.value).floor()),
+            appBar: AppBar(
+              title: Hero(
+                tag: '${widget.model?.id}_appbar_title' ?? 'add',
+                child: AnimatedBuilder(
+                  animation: widget.transitionAnimation,
+                  builder: (context, child) {
+                    return Container(
+                      child: Text(
+                        widget.model == null ? '+ add' : 'edit',
+                        style: TextStyle(
+                            color: widget.model == null ? ColorTween(begin: Theme.of(context).primaryColor, end: Colors.white).transform(widget.transitionAnimation.value) : Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            decoration: TextDecoration.none),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.done),
+                  onPressed: this._onDonePress,
+                )
+              ],
+            ),
+            body: Container(
+              margin: EdgeInsets.all(8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: Icon(Icons.radio_button_unchecked),
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.all(8),
+                          child: MaterialButton(
+                            child: Icon(Icons.radio_button_unchecked, color: Theme.of(context).primaryColor),
+                            onPressed: () {},
+                            padding: EdgeInsets.zero,
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            minWidth: 40,
+                          ),
+                        ),
+                        Expanded(
+                          child: Hero(
+                            tag: widget.model?.id ?? '',
+                            child: Material(
+                              child: Container(
+                                child: TextField(
+                                  style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18),
+                                  decoration: InputDecoration(border: InputBorder.none),
+                                  autofocus: true,
+                                  controller: TextEditingController(text: text),
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.done,
+                                  onChanged: this._onTextFieldchangeText,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  Expanded(
+                  AnimatedBuilder(
+                    animation: widget.transitionAnimation,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: widget.transitionAnimation.value,
+                        child: child,
+                      );
+                    },
                     child: Container(
-                      child: TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
-                        autofocus: true,
-                        controller: TextEditingController(text: text),
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        onChanged: this._onTextFieldchangeText,
+                      margin: EdgeInsets.only(top: 20),
+                      child: SegmentControlView(
+                        title: 'deadline:',
+                        values: ['today', 'week', 'month', 'year'],
+                        selectedValue: selectedTodoType,
+                        onValueChange: _onSegmentValueChange,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              child: SegmentControlView(
-                title: 'deadline:',
-                values: ['today', 'week', 'month', 'year'],
-                selectedValue: selectedTodoType,
-                onValueChange: _onSegmentValueChange,
-              ),
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }

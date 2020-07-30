@@ -28,7 +28,10 @@ class _SegmentControlView extends State<SegmentControlView> {
             (value) => Container(
               color: widget.selectedValue == value ? Theme.of(context).primaryColor : Colors.grey[300],
               child: MaterialButton(
-                child: Text('$value'),
+                child: Text(
+                  '$value',
+                  style: TextStyle(color: widget.selectedValue == value ? Colors.white : null),
+                ),
                 minWidth: 0,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 onPressed: () {

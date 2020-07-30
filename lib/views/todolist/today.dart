@@ -5,6 +5,8 @@ import 'package:todolist/viewmodels/list/list.dart';
 import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
 import 'package:todolist/views/todolist/timmer_control.dart';
+import 'package:todolist/views/todolist/summary.dart';
+import 'package:todolist/views/todolist/tomato_statistic.dart';
 
 class TodayListView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -20,7 +22,7 @@ class TodayListView extends StatefulWidget {
 class _TodayListView extends State<TodayListView> {
   Widget _buildItem(TodoModel model) {
     return Container(
-      margin: EdgeInsets.only(left: 10, top: 10, right: 10),
+      margin: EdgeInsets.only(left: 8, top: 8, right: 8),
       decoration: BoxDecoration(color: Colors.white),
       child: MaterialButton(
         padding: EdgeInsets.zero,
@@ -37,16 +39,19 @@ class _TodayListView extends State<TodayListView> {
                       values: ['edit', 'put back', 'delete'],
                       onValueChange: (value) {
                         if (value == 'edit') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TodoEditView(
-                                viewModel: TodoListViewModel.getInstance(),
-                                model: model,
-                              ),
+                          Navigator.of(context).push(
+                            PageRouteBuilder<void>(
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                                return TodoEditView(
+                                  viewModel: TodoListViewModel.getInstance(),
+                                  transitionAnimation: animation,
+                                  model: model,
+                                );
+                              },
                             ),
                           );
                         } else if (value == 'put back') {
+                          model.updatedTime = DateTime.now();
                           widget.viewModel.removeTodayTodo(model);
                         } else if (value == 'delete') {
                           widget.viewModel.destoryTodo(model);
@@ -63,7 +68,7 @@ class _TodayListView extends State<TodayListView> {
               Row(
                 children: <Widget>[
                   MaterialButton(
-                    child: Icon(model.isDone == true ? Icons.radio_button_checked : Icons.radio_button_unchecked),
+                    child: Icon(model.isDone == true ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: Theme.of(context).primaryColor),
                     onPressed: () {
                       widget.viewModel.done(model: model, done: !(model.isDone == true));
                     },
@@ -73,10 +78,13 @@ class _TodayListView extends State<TodayListView> {
                   ),
                   Container(
                     child: Flexible(
-                      child: Text(
-                        model.name ?? '',
-                        maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: Hero(
+                        tag: model.id,
+                        child: Text(
+                          model.name ?? '',
+                          maxLines: 2,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ),
                   ),
@@ -91,47 +99,26 @@ class _TodayListView extends State<TodayListView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            ...?model.doHistories?.map(
-                              (history) => Text(
-                                '✗ ',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ),
-                          ],
+                        TomatoStatisticView(
+                          model: model,
                         ),
-                        if (model.doHistories != null && model.doHistories.length > 0) Container(height: 5),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          color: Theme.of(context).primaryColor,
-                          child: Text(
-                            model.type ?? '',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        Container(height: 5),
+                        SummeryView(
+                          model: model,
                         ),
                       ],
                     ),
                   ),
                   if (model.isDone != true)
-                    Builder(
-                      builder: (context) {
-                        return TimmerControllerView(
-                          model: model,
-                          seconds: 60 * 25,
-                          onChangeTimePress: () {},
-                          onStartPress: () {
-                            widget.viewModel.startToding(model);
-                          },
-                          onCancelPress: () {
-                            widget.viewModel.cancelDoing(model);
-                          },
-                          onTimeout: () {
-                            widget.viewModel.finishDoing(model);
-                          },
-                        );
+                    TimmerControllerView(
+                      model: model,
+                      onStartPress: (duration) {
+                        widget.viewModel.startToding(model: model, duration: duration);
                       },
-                    ),
+                      onComplete: ({bool isDone}) {
+                        widget.viewModel.finishDoing(model: model, isDone: isDone);
+                      },
+                    )
                 ],
               )
             ],

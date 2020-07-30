@@ -1,5 +1,7 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_local_notifications (0.0.1):
+    - Flutter
   - shared_preferences (0.0.1):
     - Flutter
   - shared_preferences_macos (0.0.1):
@@ -12,19 +14,31 @@ PODS:
     - Flutter
   - url_launcher_web (0.0.1):
     - Flutter
+  - wakelock (0.0.1):
+    - Flutter
+  - wechat_kit (1.1.0):
+    - Flutter
+    - wechat_kit/vendor (= 1.1.0)
+  - wechat_kit/vendor (1.1.0):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
   - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
   - url_launcher_web (from `.symlinks/plugins/url_launcher_web/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - wechat_kit (from `.symlinks/plugins/wechat_kit/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   shared_preferences_macos:
@@ -37,15 +51,22 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_macos/ios"
   url_launcher_web:
     :path: ".symlinks/plugins/url_launcher_web/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
+  wechat_kit:
+    :path: ".symlinks/plugins/wechat_kit/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
+  wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
+  wechat_kit: de05a5ee6c82606aefaee03c507d9db2e5c725ad
 
 PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/viewmodels/common/launch_load.dart';
+import 'package:todolist/viewmodels/session/index.dart';
 import 'package:todolist/views/index.dart';
+import 'package:todolist/views/session/login.dart';
 
 class LaunchLoadingView extends StatefulWidget {
   final LaunchLoadingViewModel viewModel;
@@ -25,7 +27,16 @@ class _LaunchLoadingView extends State<LaunchLoadingView> {
   _checkState() async {
     await widget.viewModel.checkState();
 
-    if (widget.viewModel.isLoading == false && widget.viewModel.e == null) {
+    if (widget.viewModel.isLoading == false && widget.viewModel.e != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginView(
+            viewModel: SessionViewModel.getInstance(),
+          ),
+        ),
+      );
+    } else if (widget.viewModel.isLoading == false && widget.viewModel.e == null) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

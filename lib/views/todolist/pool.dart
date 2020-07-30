@@ -4,6 +4,8 @@ import 'package:todolist/models/todo.dart';
 import 'package:todolist/viewmodels/list/list.dart';
 import 'package:todolist/views/todolist/edit.dart';
 import 'package:todolist/views/todolist/operator_selector.dart';
+import 'package:todolist/views/todolist/summary.dart';
+import 'package:todolist/views/todolist/tomato_statistic.dart';
 
 class TodoPoolView extends StatefulWidget {
   final TodoListViewModel viewModel;
@@ -24,17 +26,27 @@ class _TodoPoolView extends State<TodoPoolView> {
       margin: EdgeInsets.all(10),
       child: MaterialButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TodoEditView(
-                viewModel: TodoListViewModel.getInstance(),
-              ),
+          Navigator.of(context).push(
+            PageRouteBuilder<void>(
+              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                return TodoEditView(
+                  viewModel: TodoListViewModel.getInstance(),
+                  transitionAnimation: animation,
+                );
+              },
             ),
           );
         },
         child: Center(
-          child: Text('+ add'),
+          child: Hero(
+            tag: 'add',
+            child: Container(
+              child: Text(
+                '+ add',
+                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 20, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -57,11 +69,16 @@ class _TodoPoolView extends State<TodoPoolView> {
     );
   }
 
-  _onModelCheckboxPress(TodoModel model) {
+  _onModelCheckboxPress(BuildContext context, TodoModel model) {
     if (widget.viewModel.todayList.any((element) => element.id == model.id)) {
       widget.viewModel.removeTodayTodo(model);
     } else {
       widget.viewModel.addTodayTodo(model);
+      Scaffold.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 1),
+        content: Text('added to today list'),
+      ));
     }
   }
 
@@ -82,18 +99,22 @@ class _TodoPoolView extends State<TodoPoolView> {
                   context: context,
                   builder: (context) {
                     return OpearateSelectorView(
-                      values: ['edit', 'delete'],
+                      values: ['edit', 'finish', 'delete'],
                       onValueChange: (value) {
                         if (value == 'edit') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TodoEditView(
-                                viewModel: TodoListViewModel.getInstance(),
-                                model: model,
-                              ),
+                          Navigator.of(context).push(
+                            PageRouteBuilder<void>(
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                                return TodoEditView(
+                                  viewModel: TodoListViewModel.getInstance(),
+                                  transitionAnimation: animation,
+                                  model: model,
+                                );
+                              },
                             ),
                           );
+                        } else if (value == 'finish') {
+                          widget.viewModel.done(model: model, done: true);
                         } else if (value == 'delete') {
                           widget.viewModel.destoryTodo(model);
                         }
@@ -108,25 +129,32 @@ class _TodoPoolView extends State<TodoPoolView> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  MaterialButton(
-                    child: Icon(model.isDone == true ? Icons.radio_button_checked : isInToday ? Icons.check_box : Icons.check_box_outline_blank),
-                    onPressed: () {
-                      if (model.isDone == true) {
-                        widget.viewModel.done(model: model, done: false);
-                      } else {
-                        this._onModelCheckboxPress(model);
-                      }
+                  Builder(
+                    builder: (context) {
+                      return MaterialButton(
+                        child: Icon(model.isDone == true ? Icons.radio_button_checked : isInToday ? Icons.check_box : Icons.check_box_outline_blank, color: Theme.of(context).primaryColor),
+                        onPressed: () {
+                          if (model.isDone == true) {
+                            widget.viewModel.done(model: model, done: false);
+                          } else {
+                            this._onModelCheckboxPress(context, model);
+                          }
+                        },
+                        padding: EdgeInsets.zero,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        minWidth: 40,
+                      );
                     },
-                    padding: EdgeInsets.zero,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    minWidth: 40,
                   ),
                   Container(
                     child: Flexible(
-                      child: Text(
-                        model.name ?? '',
-                        maxLines: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: Hero(
+                        tag: model.id,
+                        child: Text(
+                          model.name ?? '',
+                          maxLines: 2,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ),
                   ),
@@ -141,28 +169,15 @@ class _TodoPoolView extends State<TodoPoolView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            ...?model.doHistories?.map(
-                              (history) => Text(
-                                '✗ ',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ),
-                          ],
+                        TomatoStatisticView(
+                          model: model,
                         ),
                         if (model.doHistories != null && model.doHistories.length > 0)
                           Container(
                             height: 5,
                           ),
-                        Container(
-                          // margin: EdgeInsets.only(top: 5),
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          color: Theme.of(context).primaryColor,
-                          child: Text(
-                            model.type ?? '',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        SummeryView(
+                          model: model,
                         ),
                       ],
                     ),

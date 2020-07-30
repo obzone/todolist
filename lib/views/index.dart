@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/viewmodels/list/list.dart';
+import 'package:todolist/views/common/flip_clock.dart';
 import 'package:todolist/views/todolist/pool.dart';
 import 'package:todolist/views/todolist/today.dart';
 
@@ -11,7 +12,7 @@ class HomePageView extends StatefulWidget {
   }
 }
 
-class _HomePageView extends State<HomePageView> with SingleTickerProviderStateMixin {
+class _HomePageView extends State<HomePageView> with TickerProviderStateMixin {
   TabController _tabController; //需要定义一个Controller
   List tabs = ["today list", "todo pool"];
 
@@ -25,6 +26,56 @@ class _HomePageView extends State<HomePageView> with SingleTickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: Theme.of(context).primaryColor,
+                child: SafeArea(
+                  child: Container(),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(15),
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+                child: Icon(
+                  Icons.view_headline,
+                  color: Colors.white,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.access_time),
+                onTap: () async {
+                  await Navigator.of(context).maybePop();
+                  Navigator.of(context).push(
+                    PageRouteBuilder<void>(
+                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                        return FlipClockView(
+                          bengin: (DateTime.now().hour * 3600 + DateTime.now().minute * 60 + DateTime.now().second).floor(),
+                          duration: 60 * 60 * 24,
+                          title: '',
+                          decline: false,
+                        );
+                      },
+                    ),
+                  );
+                },
+                title: Text('flip clock'),
+              ),
+              Container(
+                height: 1,
+                color: Theme.of(context).dividerColor,
+              ),
+              ListTile(
+                leading: Icon(Icons.system_update),
+                title: Text('version: 1.0.0'),
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: TabBar(
@@ -34,17 +85,13 @@ class _HomePageView extends State<HomePageView> with SingleTickerProviderStateMi
           unselectedLabelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
           indicatorColor: Colors.transparent,
           controller: _tabController,
-          tabs: tabs.map((tabTitle) => Tab(text: tabTitle)).toList(),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.perm_identity),
-          onPressed: () {},
+          tabs: tabs.map((tabTitle) {
+            return Tab(text: tabTitle);
+          }).toList(),
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.settings,
-            ),
+            icon: Icon(Icons.perm_identity),
             onPressed: () {},
           )
         ],

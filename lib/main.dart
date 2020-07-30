@@ -13,16 +13,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Color(0xFFF0F0F0),
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+          primarySwatch: Colors.red,
+          scaffoldBackgroundColor: Color(0xFFF0F0F0),
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          appBarTheme: AppBarTheme(color: Colors.lightGreen[900])),
       home: LaunchLoadingView(
         viewModel: LaunchLoadingViewModel(),
       ),
+      // home: RadialExpansionDemo(),
     );
   }
 }

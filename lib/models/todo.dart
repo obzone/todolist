@@ -7,13 +7,13 @@ class DoHistoryModel {
   DateTime startTime;
   DateTime endTime;
 
-  int totalTime = 25 * 60;
+  int totalTime;
 
   DoHistoryModel({this.startTime, this.endTime, this.totalTime});
 
   int get surplusSeconds {
     if (startTime == null) return null;
-    int surplusSeconds = 25 * 60 - ((DateTime.now().millisecondsSinceEpoch - startTime.millisecondsSinceEpoch) / 1000).floor();
+    int surplusSeconds = totalTime - ((DateTime.now().millisecondsSinceEpoch - startTime.millisecondsSinceEpoch) / 1000).floor();
     return surplusSeconds > 0 ? surplusSeconds : 0;
   }
 
@@ -32,6 +32,10 @@ class TodoModel {
   String type;
 
   List<DoHistoryModel> doHistories;
+
+  DoHistoryModel get doing {
+    return doHistories != null && doHistories.length > 0 ? doHistories.last : null;
+  }
 
   TodoModel({
     this.id,
