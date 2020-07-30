@@ -132,8 +132,8 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       if (isDone == true) {
-        model.doHistories.last.endTime = DateTime.now();
         if (model.doing == null || model.doing.startTime == null || (model.doing.startTime.millisecondsSinceEpoch + (model.doing.totalTime - 1) * 1000) >= DateTime.now().millisecondsSinceEpoch) {
+          model.doHistories.last.endTime = model.doing.startTime.add(Duration(seconds: model.doing.totalTime));
           LocalNotificationService.getInstance().cancelAll();
         }
       } else {

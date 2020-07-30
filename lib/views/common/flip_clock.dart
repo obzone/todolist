@@ -36,6 +36,12 @@ class _FlipCounterView extends State<FlipCounterView> with SingleTickerProviderS
     controller.forward();
   }
 
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   _buildNumberWidget({String value, double fontOffsetY}) {
     return ClipRect(
       child: Container(
@@ -149,6 +155,12 @@ class _FlipClockView extends State<FlipClockView> with SingleTickerProviderState
     super.deactivate();
 
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   _buildDeclineClock(
