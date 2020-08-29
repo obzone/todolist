@@ -549,7 +549,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 77MFK4U3T9;
+				DEVELOPMENT_TEAM = S5K39ZAK7U;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -564,9 +564,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.noahwm.dataview.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yingda.riskmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = com.noahwm.dataview.uat;
+				PROVISIONING_PROFILE_SPECIFIER = RiskMap;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = com.noahwm.dataview.uat;
 				SUPPORTS_MACCATALYST = YES;
 				VERSIONING_SYSTEM = "apple-generic";
