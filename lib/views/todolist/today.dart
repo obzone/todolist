@@ -41,7 +41,9 @@ class _TodayListView extends State<TodayListView> {
                         if (value == 'edit') {
                           Navigator.of(context).push(
                             PageRouteBuilder<void>(
-                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
                                 return TodoEditView(
                                   viewModel: TodoListViewModel.getInstance(),
                                   transitionAnimation: animation,
@@ -68,9 +70,14 @@ class _TodayListView extends State<TodayListView> {
               Row(
                 children: <Widget>[
                   MaterialButton(
-                    child: Icon(model.isDone == true ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: Theme.of(context).primaryColor),
+                    child: Icon(
+                        model.isDone == true
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_unchecked,
+                        color: Theme.of(context).primaryColor),
                     onPressed: () {
-                      widget.viewModel.done(model: model, done: !(model.isDone == true));
+                      widget.viewModel
+                          .done(model: model, done: !(model.isDone == true));
                     },
                     padding: EdgeInsets.zero,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -83,7 +90,11 @@ class _TodayListView extends State<TodayListView> {
                         child: Text(
                           model.name ?? '',
                           maxLines: 2,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'pingfang', fontSize: 18, color: Theme.of(context).primaryColor),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'pingfang',
+                              fontSize: 18,
+                              color: Theme.of(context).primaryColor),
                         ),
                       ),
                     ),
@@ -113,10 +124,12 @@ class _TodayListView extends State<TodayListView> {
                     TimmerControllerView(
                       model: model,
                       onStartPress: (duration) {
-                        widget.viewModel.startToding(model: model, duration: duration);
+                        widget.viewModel
+                            .startToding(model: model, duration: duration);
                       },
                       onComplete: ({bool isDone}) {
-                        widget.viewModel.finishDoing(model: model, isDone: isDone);
+                        widget.viewModel
+                            .finishDoing(model: model, isDone: isDone);
                       },
                     )
                 ],
@@ -135,11 +148,13 @@ class _TodayListView extends State<TodayListView> {
       child: MaterialButton(
         onPressed: () {
           setState(() {
-            widget.viewModel.showTodayDoneList = !(widget.viewModel.showTodayDoneList == true);
+            widget.viewModel.showTodayDoneList =
+                !(widget.viewModel.showTodayDoneList == true);
           });
         },
         child: Center(
-          child: Text('${widget.viewModel.showTodayDoneList == true ? 'hide' : 'show'} finished history..'),
+          child: Text(
+              '${widget.viewModel.showTodayDoneList == true ? 'hide' : 'show'} finished history..'),
         ),
       ),
     );
@@ -154,12 +169,16 @@ class _TodayListView extends State<TodayListView> {
           return Container(
             child: ListView(
               children: <Widget>[
-                ...((viewmodel.todayList ?? []).where((element) => element.isDone != true).map((model) {
+                ...((viewmodel.todayList ?? [])
+                    .where((element) => element.isDone != true)
+                    .map((model) {
                   return this._buildItem(model);
                 })),
                 _buildShowFinishedHistoryItem(),
                 if (viewmodel.showTodayDoneList)
-                  ...((viewmodel.todayList ?? []).where((element) => element.isDone == true).map((model) {
+                  ...((viewmodel.todayList ?? [])
+                      .where((element) => element.isDone == true)
+                      .map((model) {
                     return this._buildItem(model);
                   })),
               ],

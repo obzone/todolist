@@ -74,8 +74,9 @@ class TodoListViewModel extends BaseViewModel {
           .toList()
           .cast<TodoModel>();
       this.todayList = this.todoPool?.where((poolModel) => todayTodos.any((todayModel) => poolModel.id == todayModel.id))?.toList() ?? [];
+      // 任务在后台结束的，重新调整时间
       this.todayList.where((element) {
-        return element.doing != null && element.doing.endTime == null && ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000) < DateTime.now().millisecondsSinceEpoch);
+        return element.doing != null && element.doing.endTime == null && DateTime.now().millisecondsSinceEpoch >= ((element.doing.startTime.millisecondsSinceEpoch + element.doing.totalTime * 1000));
       }).forEach((element) {
         element.doing.endTime = element.doing.startTime.add(Duration(seconds: element.doing.totalTime));
         element.updatedTime = DateTime.now();
@@ -132,10 +133,14 @@ class TodoListViewModel extends BaseViewModel {
       this.e = null;
       notifyListeners();
       if (isDone == true) {
-        if (model.doing == null || model.doing.startTime == null || (model.doing.startTime.millisecondsSinceEpoch + (model.doing.totalTime - 1) * 1000) >= DateTime.now().millisecondsSinceEpoch) {
+        /// 如果超过当前时间，设置为预设时间
+        if (model.doing != null && model.doing.endTime == null && DateTime.now().millisecondsSinceEpoch >= (model.doing.startTime.millisecondsSinceEpoch + model.doing.totalTime * 1000)) {
           model.doHistories.last.endTime = model.doing.startTime.add(Duration(seconds: model.doing.totalTime));
-          LocalNotificationService.getInstance().cancelAll();
+        } else {
+          // 如果没有超过当前时间，设置为当前时间
+          model.doing.endTime = DateTime.now();
         }
+        LocalNotificationService.getInstance().cancelAll();
       } else {
         model.doHistories.removeLast();
         LocalNotificationService.getInstance().cancelAll();
